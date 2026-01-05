@@ -1,0 +1,35 @@
+services:
+  server:
+    image: 'nginx:stable-alpine'
+    ports:
+      - "8000:80"
+    volumes:
+      - ./Sim-Sanctum-Api:/var/www/html
+      - ./nginx/nginx.conf:/etc/nginx/conf.d/default.conf:ro
+    depends_on:
+      - php
+      - mysql
+  php:
+    build: 
+      context: ./dockerfiles
+      dockerfile: php.dockerfile
+    volumes:
+      - ./Sim-Sanctum-Api:/var/www/html
+  mysql:
+    image: mysql:latest
+    environment:
+      - MYSQL_DATABASE=sim_sanctum_api
+      - MYSQL_ROOT_PASSWORD=123
+  composer:
+    build:
+      context: ./dockerfiles
+      dockerfile: composer.dockerfile
+    volumes:
+      - ./Sim-Sanctum-Api:/var/www/html:delegated
+  artisan:
+    build:
+      context: ./dockerfiles
+      dockerfile: php.dockerfile
+    volumes:
+      - ./Sim-Sanctum-Api:/var/www/html:delegated
+    entrypoint: ["php", "/var/www/html/artisan"]
