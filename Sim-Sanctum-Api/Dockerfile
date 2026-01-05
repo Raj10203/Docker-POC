@@ -14,8 +14,7 @@ RUN apt-get update && apt-get install -y \
     libzip-dev \
     curl \
     git \
-    && docker-php-ext-configure pgsql \
-    && docker-php-ext-install -j$(nproc) pgsql pdo_pgsql zip pdo pdo_mysql
+    && docker-php-ext-install -j$(nproc) zip pdo_mysql
 
 COPY composer.json composer.lock ./
 
