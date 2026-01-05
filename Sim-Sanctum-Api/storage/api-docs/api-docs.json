@@ -1,0 +1,820 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Learning Laravel API",
+        "description": "API Documentation for Learning Laravel",
+        "contact": {
+            "name": "API Support",
+            "email": "support@learninglaravel.com"
+        },
+        "version": "1.0.0"
+    },
+    "servers": [
+        {
+            "url": "/",
+            "description": "API Server"
+        }
+    ],
+    "paths": {
+        "/api/signup": {
+            "post": {
+                "tags": [
+                    "Authentication"
+                ],
+                "summary": "Register a new user",
+                "operationId": "7905d0ea8699a1ff380b6a289f84aac8",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "name",
+                                    "email",
+                                    "password"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "example": "John Doe"
+                                    },
+                                    "email": {
+                                        "type": "string",
+                                        "format": "email",
+                                        "example": "john@example.com"
+                                    },
+                                    "password": {
+                                        "type": "string",
+                                        "format": "password",
+                                        "example": "secret123"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "User registered successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "data": {
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/login": {
+            "post": {
+                "tags": [
+                    "Authentication"
+                ],
+                "summary": "Authenticate user and get token",
+                "operationId": "44212a9096e4b09358281e9ec8a0701d",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "email",
+                                    "password"
+                                ],
+                                "properties": {
+                                    "email": {
+                                        "type": "string",
+                                        "format": "email",
+                                        "example": "john@example.com"
+                                    },
+                                    "password": {
+                                        "type": "string",
+                                        "format": "password",
+                                        "example": "secret123"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "User logged in successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "User Logged in Successfully"
+                                        },
+                                        "token": {
+                                            "type": "string",
+                                            "example": "1|abcdef123456..."
+                                        },
+                                        "token_type": {
+                                            "type": "string",
+                                            "example": "bearer"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Invalid credentials"
+                    }
+                }
+            }
+        },
+        "/api/logout": {
+            "post": {
+                "tags": [
+                    "Authentication"
+                ],
+                "summary": "Logout the authenticated user",
+                "operationId": "79854151e609bd20032aa5aa4d5a35c0",
+                "responses": {
+                    "200": {
+                        "description": "User logged out successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "User Logged out Successfully"
+                                        },
+                                        "data": {
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/drones": {
+            "get": {
+                "tags": [
+                    "Drones"
+                ],
+                "summary": "Get all drones",
+                "operationId": "25890125e248fd58ba0f5d833ee26b57",
+                "responses": {
+                    "200": {
+                        "description": "List of drones"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Drones"
+                ],
+                "summary": "Create a new drone",
+                "operationId": "7fe03140dc280865b0f64754f7dc14ff",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "drone_name",
+                                    "serial_number"
+                                ],
+                                "properties": {
+                                    "drone_name": {
+                                        "type": "string"
+                                    },
+                                    "serial_number": {
+                                        "type": "string"
+                                    },
+                                    "battrey_capacity_mah": {
+                                        "type": "string"
+                                    },
+                                    "max_flight_time_minutes": {
+                                        "type": "string"
+                                    },
+                                    "camera_specs": {
+                                        "type": "object"
+                                    },
+                                    "status": {
+                                        "type": "integer"
+                                    },
+                                    "last_maintenance_date": {
+                                        "type": "string",
+                                        "format": "date"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Drone created"
+                    },
+                    "422": {
+                        "description": "Validation error"
+                    }
+                }
+            }
+        },
+        "/api/drones/{drone}": {
+            "get": {
+                "tags": [
+                    "Drones"
+                ],
+                "summary": "Get a drone by ID",
+                "operationId": "746f2a011d1e40d5d5bbf7cd662219fb",
+                "parameters": [
+                    {
+                        "name": "drone",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Drone data"
+                    },
+                    "404": {
+                        "description": "Not found"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Drones"
+                ],
+                "summary": "Update a drone",
+                "operationId": "6cb84493fbcec0de2cc5b6e50e1dd2de",
+                "parameters": [
+                    {
+                        "name": "drone",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "drone_name": {
+                                        "type": "string"
+                                    },
+                                    "serial_number": {
+                                        "type": "string"
+                                    },
+                                    "battrey_capacity_mah": {
+                                        "type": "string"
+                                    },
+                                    "max_flight_time_minutes": {
+                                        "type": "string"
+                                    },
+                                    "camera_specs": {
+                                        "type": "object"
+                                    },
+                                    "status": {
+                                        "type": "integer"
+                                    },
+                                    "last_maintenance_date": {
+                                        "type": "string",
+                                        "format": "date"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Drone updated"
+                    },
+                    "422": {
+                        "description": "Validation error"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Drones"
+                ],
+                "summary": "Delete a drone",
+                "operationId": "bcc12cac544c6058b35d33098a73b5de",
+                "parameters": [
+                    {
+                        "name": "drone",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Drone deleted"
+                    },
+                    "404": {
+                        "description": "Not found"
+                    }
+                }
+            }
+        },
+        "/api/inspections": {
+            "get": {
+                "tags": [
+                    "Inspections"
+                ],
+                "summary": "Get all inspections",
+                "operationId": "7a819a6bc42e6694d6cabc5748e9f132",
+                "responses": {
+                    "200": {
+                        "description": "List of inspections"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Inspections"
+                ],
+                "summary": "Create a new inspection",
+                "description": "Store a newly created resource in storage.",
+                "operationId": "91981377b2005c07f2639a61a122f800",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "site_id",
+                                    "inspection_date",
+                                    "inspector_id",
+                                    "status"
+                                ],
+                                "properties": {
+                                    "site_id": {
+                                        "type": "integer"
+                                    },
+                                    "inspection_date": {
+                                        "type": "string",
+                                        "format": "date"
+                                    },
+                                    "inspector_id": {
+                                        "type": "integer"
+                                    },
+                                    "status": {
+                                        "type": "integer"
+                                    },
+                                    "drone_ids": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "integer"
+                                        }
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Inspection created"
+                    },
+                    "422": {
+                        "description": "Validation error"
+                    }
+                }
+            }
+        },
+        "/api/inspections/{inspection}": {
+            "get": {
+                "tags": [
+                    "Inspections"
+                ],
+                "summary": "Get an inspection by ID",
+                "description": "Display the specified resource.",
+                "operationId": "6e3116749acad185ad42cb0ca992c5c8",
+                "parameters": [
+                    {
+                        "name": "inspection",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Inspection data"
+                    },
+                    "404": {
+                        "description": "Not found"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Inspections"
+                ],
+                "summary": "Update an inspection",
+                "description": "Update the specified resource in storage.",
+                "operationId": "e5b0856bd1ade7c4ec12fbe8466ab904",
+                "parameters": [
+                    {
+                        "name": "inspection",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "site_id": {
+                                        "type": "integer"
+                                    },
+                                    "inspection_date": {
+                                        "type": "string",
+                                        "format": "date"
+                                    },
+                                    "inspector_id": {
+                                        "type": "integer"
+                                    },
+                                    "status": {
+                                        "type": "integer"
+                                    },
+                                    "drone_ids": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "integer"
+                                        }
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Inspection updated"
+                    },
+                    "422": {
+                        "description": "Validation error"
+                    },
+                    "404": {
+                        "description": "Not found"
+                    }
+                }
+            }
+        },
+        "/api/sites": {
+            "get": {
+                "tags": [
+                    "Sites"
+                ],
+                "summary": "Get list of all sites",
+                "operationId": "de7e8bf59225342ff3e3fbcd81f0f7d6",
+                "responses": {
+                    "200": {
+                        "description": "List of sites",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "id": {
+                                                        "type": "integer",
+                                                        "example": 1
+                                                    },
+                                                    "name": {
+                                                        "type": "string",
+                                                        "example": "Site A"
+                                                    },
+                                                    "url": {
+                                                        "type": "string",
+                                                        "example": "http://example.com"
+                                                    },
+                                                    "size_in_mw": {
+                                                        "type": "number",
+                                                        "format": "float",
+                                                        "example": 100.5
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Sites"
+                ],
+                "summary": "Create a new site",
+                "operationId": "d26cfb1e1b9839299f259bf1e51230e1",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "example": "Site A"
+                                    },
+                                    "url": {
+                                        "type": "string",
+                                        "example": "http://example.com"
+                                    },
+                                    "size_in_mw": {
+                                        "type": "number",
+                                        "format": "float",
+                                        "example": 100.5
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Site created successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "data": {
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/sites/{site}": {
+            "get": {
+                "tags": [
+                    "Sites"
+                ],
+                "summary": "Get a single site by ID",
+                "operationId": "816c5385d53cbdbb5aae7442c0daf332",
+                "parameters": [
+                    {
+                        "name": "site",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Site details",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "data": {
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "put": {
+                "tags": [
+                    "Sites"
+                ],
+                "summary": "Update a site by ID",
+                "operationId": "40a4afea0b3a680d89bbc5dddca46c82",
+                "parameters": [
+                    {
+                        "name": "site",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "example": "Site A"
+                                    },
+                                    "url": {
+                                        "type": "string",
+                                        "example": "http://example.com"
+                                    },
+                                    "size_in_mw": {
+                                        "type": "number",
+                                        "format": "float",
+                                        "example": 100.5
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Site updated successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "data": {
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "Sites"
+                ],
+                "summary": "Delete a site by ID",
+                "operationId": "f025f19edbbfd2a357c5358137a87839",
+                "parameters": [
+                    {
+                        "name": "site",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Site deleted successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Site deleted successfully"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        }
+    },
+    "components": {
+        "securitySchemes": {
+            "bearerAuth": {
+                "type": "http",
+                "bearerFormat": "JWT",
+                "scheme": "bearer"
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "Authentication",
+            "description": "Authentication"
+        },
+        {
+            "name": "Drones",
+            "description": "Drones"
+        },
+        {
+            "name": "Inspections",
+            "description": "Inspections"
+        },
+        {
+            "name": "Sites",
+            "description": "Sites"
+        }
+    ]
+}
