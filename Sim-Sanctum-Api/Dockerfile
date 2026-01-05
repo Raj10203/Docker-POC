@@ -24,3 +24,8 @@ RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local
 
 # Copy the rest of the application
 COPY . .
+
+# Ensure storage and cache directories exist and are writable by the Apache user
+RUN mkdir -p /var/www/html/storage /var/www/html/storage/framework /var/www/html/storage/framework/sessions /var/www/html/bootstrap/cache \
+    && chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache \
+    && chmod -R 775 /var/www/html/storage /var/www/html/bootstrap/cache
