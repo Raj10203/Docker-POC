@@ -9,19 +9,25 @@ services:
     depends_on:
       - php
       - mysql
+      - redis
+      - mailpit
   php:
     build: 
       context: ./dockerfiles
       dockerfile: php.dockerfile
     volumes:
       - ./Sim-Sanctum-Api:/var/www/html
+    env_file:
+      - ./env/.env
+    depends_on:
+      - mysql
+      - redis
     extra_hosts:
       - "host.docker.internal:host-gateway"
   mysql:
     image: mysql:latest
-    environment:
-      - MYSQL_DATABASE=sim_sanctum_api
-      - MYSQL_ROOT_PASSWORD=123
+    env_file:
+      - ./env/.env
   composer:
     build:
       context: ./dockerfiles
@@ -34,6 +40,23 @@ services:
       dockerfile: php.dockerfile
     volumes:
       - ./Sim-Sanctum-Api:/var/www/html:delegated
+    env_file:
+      - ./env/.env
     entrypoint: ["php", "/var/www/html/artisan"]
+    depends_on:
+      - mysql
+      - redis
+      - mailpit
     extra_hosts:
       - "host.docker.internal:host-gateway"
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "63790:6379"
+    restart: always
+  mailpit:
+    image: axllent/mailpit:latest
+    ports:
+      - "1025:1025"
+      - "8025:8025"
+    restart: always
