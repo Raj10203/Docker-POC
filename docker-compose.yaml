@@ -15,6 +15,8 @@ services:
       dockerfile: php.dockerfile
     volumes:
       - ./Sim-Sanctum-Api:/var/www/html
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
   mysql:
     image: mysql:latest
     environment:
@@ -33,3 +35,5 @@ services:
     volumes:
       - ./Sim-Sanctum-Api:/var/www/html:delegated
     entrypoint: ["php", "/var/www/html/artisan"]
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
